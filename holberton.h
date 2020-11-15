@@ -24,6 +24,6 @@ char **line_split(char *line);
 
 int _strcmp(char *s1, char *s2);
 
-int _str_n_cmp(char *s1, const char *s2, int n)
+int _str_n_cmp(char *s1, const char *s2, int n);
 
 #endif
