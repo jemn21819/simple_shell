@@ -14,7 +14,7 @@ int launcher(char **arg);
 
 int _strlen(char *s);
 
-char *_strncpy(char *dest, char *src, int n);
+void _strncpy(char *dest, char *src, size_t n);
 
 char *_strdup(char *str);
 
@@ -23,5 +23,7 @@ void free_pointers(char **pointers);
 char **line_split(char *line);
 
 int _strcmp(char *s1, char *s2);
+
+int _str_n_cmp(char *s1, const char *s2, int n)
 
 #endif
