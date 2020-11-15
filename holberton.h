@@ -13,7 +13,7 @@
 
 int _strlen(char *s);
 
-void _strncpy(char *dest, char *src, int n);
+void _strcpy(char *dest, char *src, size_t n);
 
 char *_strdup(char *str);
 
