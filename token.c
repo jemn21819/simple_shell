@@ -33,15 +33,19 @@ size_t tok_counter(const char *line, const char *delim)
 	int index = 0;
 
 	while (line[index])
+	{
 		while (get_delim(line[index], delim))
 			index++;
-	if (line[index] == '\0')
-		break;
-	count++;
-	while (!get_delim(line[index], delim) && line[index] != '\0')
-		index++;
+		if (line[index] == '\0')
+		{
+			break;
+		}
+		count++;
+		while (!get_delim(line[index], delim) && line[index] != '\0')
+			index++;
+	}
+	return (count);
 }
-return (count);
 
 /**
 * tok_string - tokenizes a string by a delimeter
@@ -63,7 +67,7 @@ void tok_string(char **arstr, char *line, const char *delim)
 		index++;
 		token = strtok(NULL, delim);
 	}
-	arrstr[index] = NULL;
+	arstr[index] = NULL;
 }
 
 /**

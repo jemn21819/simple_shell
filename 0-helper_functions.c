@@ -4,7 +4,7 @@
  * @s: string to find the length of.
  * Return: the length of the string.
  */
-int _strlen(char *s)
+int _strlen(const char *s)
 {
 	int len = 0;
 
@@ -22,7 +22,7 @@ int _strlen(char *s)
  * @n: size of string to copy.
  * Return: nothing.
  */
-void _strcpy(char *dest, char *src, size_t n)
+void _strcpy(char *dest, const char *src, size_t n)
 {
 	size_t i = 0;
 
@@ -91,5 +91,6 @@ int _str_n_cmp(char *s1, const char *s2, int n)
 		{
 			return (s1[i] - s2[i]);
 		}
+	}
 	return (0);
 }
