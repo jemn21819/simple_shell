@@ -39,7 +39,7 @@ void _strcpy(char *dest, const char *src, size_t n)
  */
 char *_strdup(char *str)
 {
-	char *new, *dup;
+	char *new;
 	int len = 0;
 
 	len = _strlen(str);
@@ -47,16 +47,9 @@ char *_strdup(char *str)
 	if (new == NULL)
 		return (NULL);
 
-	dup = new;
-	while (*str)
-	{
-		*dup = *str;
-		dup++;
-		str++;
-	}
-	*dup = '\0';
+	_strcpy(new, str, len);
 
-	return (dup);
+	return (new);
 }
 /**
  * _strcmp - compares two strings.

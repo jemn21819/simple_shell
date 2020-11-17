@@ -31,7 +31,7 @@ char *_getenv(char **env, char *key)
 * Return: the appended path (directory + file)
 */
 
-static char *append_path(const char *dir, const char *file)
+char *append_path(const char *dir, const char *file)
 {
 	char *path;
 	size_t path_len;
