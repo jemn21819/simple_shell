@@ -34,7 +34,7 @@ int run_cmd(const char *path, char **av, char **env);
 
 /* path */
 char *find_cmd(char *cmd, char **env);
-static char *append_path(const char *dir, const char *file);
+char *append_path(const char *dir, const char *file);
 char *_getenv(char **env, char *key);
 
 #endif
