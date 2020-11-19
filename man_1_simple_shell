@@ -1,0 +1,65 @@
+.TH "HSH" "1" "November 19, 2020" "" ""
+.SH NAME
+.PP
+hsh \- a simple UNIX command interpreter.
+.SH SYNOPSIS
+.PP
+\f[B]hsh\f[]
+.SH DESCRIPTION
+.PP
+\f[B]hsh\f[] is a shell compatible command language interpreter that
+executes
+.PD 0
+.P
+.PD
+commands read from the standard input or from a file.
+\f[B]hsh\f[] can be used
+.PD 0
+.P
+.PD
+in both interactive and non\-interactive modes.
+.PP
+For the interactive mode launch the executable file in your terminal
+\f[B]\&./hsh\f[].
+.PD 0
+.P
+.PD
+It will display the following prompt \f[B]$ \f[].
+Then it will read from the users
+.PD 0
+.P
+.PD
+input to execute the given commands.
+.PP
+For the non\-interactive mode redirect with a pipeline (\f[B]|\f[]) any
+precise
+.PD 0
+.P
+.PD
+output that would specify either the name or the path of the command to
+be
+.PD 0
+.P
+.PD
+interpreted by \f[B]\&./hsh\f[]
+.SH OPTIONS
+.PP
+\f[B]Ctrl+D\f[] : Exits the interactive mode.
+.SH EXAMPLES
+.PP
+\f[B]$ ./hsh\f[] : Enters interactive mode and displays the prompt for
+the user to input commands.
+.PP
+\f[B]$ echo "/bin/ls" | ./hsh\f[] : Displays the contents of the current
+working directory.
+.SH EXIT VALUES
+.PP
+Errors that are detected by \f[B]hsh\f[], will cause the program to exit
+with a non\-zero exit status.
+Otherwise the \f[B]hsh\f[] will return the exit status of the
+.PD 0
+.P
+.PD
+last command executed.
+.SH AUTHORS
+Jeffrey Martinez and Jaime Martinez.
