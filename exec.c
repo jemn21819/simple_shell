@@ -1,12 +1,11 @@
 #include "holberton.h"
 
 /**
-* run_cmd - creates a child process to execute binary
-* @path: a pointer to tokenized path
-* @av: a pointer to the argument array
-* @env: a pointer to the enivornment of the user
-*
-* Return: Status on sucess, -1 on failure
+* run_cmd - creates a child process to execute
+* @path: pointer to tokenized path
+* @av: pointer to the argument array
+* @env: pointer to the enivornment of the user
+* Return: Status sucess, -1 on failure
 */
 
 int run_cmd(const char *path, char **av, char **env)
@@ -22,7 +21,7 @@ int run_cmd(const char *path, char **av, char **env)
 		perror("Error:");
 		free(av);
 		free(env);
-		return (1);
+		 exit(1);
 	}
 
 	if (pid == 0)
@@ -46,8 +45,7 @@ int run_cmd(const char *path, char **av, char **env)
 }
 
 /**
-* exe_cmd - runs a command based on if it is a builtin,
-* absolute or appended path
+* exe_cmd - run command if it is a builtin absolute
 * @av: pointer to the argument vector
 * @env: pointer to user environment
 * Return: success or 127 file not found
@@ -69,14 +67,14 @@ int exe_cmd(char **av, char **env)
 		{
 			return (run_cmd(path, av, env));
 		}
-		_printstr("file or directory not found\n");
+		_printstr("Fail in creation of new process.\n");
 		return (127);
 	}
 
 	path = find_cmd(av[0], env);
 	if (!path)
 	{
-		_printstr("file or directory not found\n");
+		_printstr("Fail in the execution if process.\n");
 		return (127);
 	}
 	return (run_cmd(path, av, env));

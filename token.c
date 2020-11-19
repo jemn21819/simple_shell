@@ -1,8 +1,8 @@
 #include "holberton.h"
 
 /**
- * get_delim - chek for delimineter in a string
- * @c: character to compare
+ * get_delim - check for delimineter in a string
+ * @c: characters to compare
  * @delim: pointer to delimeter list
  * Return: 1 for delimeter or 0 if not
  */
@@ -82,19 +82,20 @@ void tok_string(char **arstr, char *line, const char *delim)
 char **tokenizer(char *line, const char *delim)
 {
 	size_t n;
-	char **arstr;
+	char **arr_str;
 
 	n = tok_counter(line, delim);
 	if (n == 0)
 		return (NULL);
 
-	arstr = malloc(sizeof(*arstr) * (n + 1));
-	if (!arstr)
+	arr_str = malloc(sizeof(*arr_str) * (n + 1));
+	if (!arr_str)
 	{
+		free(arr_str);
 		_printstr("malloc failed");
 		exit(EXIT_FAILURE);
 	}
-	tok_string(arstr, line, delim);
+	tok_string(arr_str, line, delim);
 
-	return (arstr);
+	return (arr_str);
 }
