@@ -1,65 +1,96 @@
-.TH "HSH" "1" "November 19, 2020" "" ""
+.TH man 1 "November 19, 2020" "1.0" "HSH"
 .SH NAME
-.PP
-hsh \- a simple UNIX command interpreter.
+.B hsh
+- a simple UNIX command interpreter.
+.br
 .SH SYNOPSIS
-.PP
-\f[B]hsh\f[]
+.B hsh [command file [argument ...]]
+.br
 .SH DESCRIPTION
-.PP
-\f[B]hsh\f[] is a shell compatible command language interpreter that
+.B hsh
+is a shell compatible command language interpreter that
 executes
-.PD 0
-.P
-.PD
+.br
 commands read from the standard input or from a file.
-\f[B]hsh\f[] can be used
-.PD 0
-.P
-.PD
+.B hsh
+can be used
+.br
 in both interactive and non\-interactive modes.
 .PP
 For the interactive mode launch the executable file in your terminal
 \f[B]\&./hsh\f[].
-.PD 0
-.P
-.PD
+.br
 It will display the following prompt \f[B]$ \f[].
 Then it will read from the users
-.PD 0
-.P
-.PD
+.br
 input to execute the given commands.
 .PP
 For the non\-interactive mode redirect with a pipeline (\f[B]|\f[]) any
 precise
-.PD 0
-.P
-.PD
+.br
 output that would specify either the name or the path of the command to
 be
-.PD 0
-.P
-.PD
+.br
 interpreted by \f[B]\&./hsh\f[]
+.br
 .SH OPTIONS
-.PP
-\f[B]Ctrl+D\f[] : Exits the interactive mode.
+.B Ctrl+D
+: Exits the interactive mode.
+.br
+.B env
+: Displays users environmental variables.
+.br
+.B exit
+: Exits the program.
+.br
 .SH EXAMPLES
-.PP
-\f[B]$ ./hsh\f[] : Enters interactive mode and displays the prompt for
-the user to input commands.
-.PP
-\f[B]$ echo "/bin/ls" | ./hsh\f[] : Displays the contents of the current
-working directory.
+.B Interactive mode
+.br
+$ ./hsh
+.br
+($) /bin/ls
+.br
+($) hsh main.c shell.c
+.br
+($) exit
+.br
+$
+.br
+.br
+.B Non-interactive mode
+.br
+$ echo "/bin/ls" | ./hsh
+.br
+hsh main.c shell.c test_ls_2
+.br
+$
+.br
+$ cat test_ls_2
+.br
+/bin/ls
+.br
+/bin/ls
+.br
+$
+.br
+$ cat test_ls_2 | ./hsh
+.br
+hsh main.c shell.c test_ls_2
+.br
+hsh main.c shell.c test_ls_2
+.br
+$
+.br
 .SH EXIT VALUES
-.PP
 Errors that are detected by \f[B]hsh\f[], will cause the program to exit
-with a non\-zero exit status.
-Otherwise the \f[B]hsh\f[] will return the exit status of the
-.PD 0
-.P
-.PD
-last command executed.
+with a
+.br
+non\-zero exit status. Otherwise the \f[B]hsh\f[] will return the exit status
+.br
+of the last command executed.
+.br
+.SH BUGS
+No bugs reported.
+.br
 .SH AUTHORS
 Jeffrey Martinez and Jaime Martinez.
