@@ -45,5 +45,6 @@ After the compilation, the hsh program can stand-alone in interactive or non-int
 ### Authors:
 
 All code written by:
-.[Jaime Martinez].(https://github.com/jemn21819)
-.[Jeff Martinez].(https://github.com/Jeff-28)
+ [Jaime Martinez](https://github.com/jemn21819)
+ [Jeff Martinez](https://github.com/Jeff-28)
+
