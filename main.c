@@ -15,6 +15,7 @@ int main(int  ac, char **av, char **env)
 	size_t size;
 	int status;
 
+	signal(SIGINT, handler);
 	while (1)
 	{
 		line = NULL;

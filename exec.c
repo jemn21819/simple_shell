@@ -54,11 +54,19 @@ int run_cmd(const char *path, char **av, char **env)
 int exe_cmd(char **av, char **env)
 {
 	char *path = av[0];
+	int status = atoi(av[1]);
 
 	if (_strcmp(path, "exit") == 0)
 	{
 		free(av);
-		exit(1);
+		if (status)
+		{
+			exit(status);
+		}
+		else
+		{
+			exit(1);
+		}
 	}
 
 	if (path[0] == '/' || path[0] == '.')
