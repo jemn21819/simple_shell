@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-
+#include <signal.h>
 
 /* print string version */
 int _printstr(char *str);
@@ -37,5 +37,8 @@ int run_cmd(const char *path, char **av, char **env);
 char *find_cmd(char *cmd, char **env);
 char *append_path(const char *dir, const char *file);
 char *_getenv(char **env, char *key);
+
+/* handler for ctrl+c signal */
+void handler(int signal);
 
 #endif
