@@ -22,7 +22,7 @@ char *_getenv(char **env, char *key)
 
 /**
 * append_path - appends the file from stdin to the
-* tokenized path 
+* tokenized path.
 * @dir: pointer to a single directory from the user PATH
 * @file: pointer to the file from stdin
 * Return: the appended path (directory + file)
