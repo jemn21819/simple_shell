@@ -10,5 +10,5 @@ void handler(int signal)
 {
 	(void)signal;
 
-	_printstr("\n$ ");
+	write(STDOUT_FILENO, "\n$ ", 3);
 }
