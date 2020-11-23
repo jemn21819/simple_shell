@@ -1,88 +1,76 @@
 #include "holberton.h"
 
 /**
-* _getenv - parses entire user environment looking for $PATH
-* @env: pointer to the user environment
-* @key: the keyword to find in the user environment
-* Return: User PATH on success
+* print_env - print enviroment
+* Return: nothing
 */
 
-char *_getenv(char **env, char *key)
+void print_env(void)
 {
-	size_t i;
+	char **p_env;
 
-	for (i = 0; env && env[i]; i++)
+	p_env = environ;
+	while (*p_env)
 	{
-		if (_str_n_cmp(env[i], key, _strlen(key)) == 0)
-
-			return (_strdup(env[i] + _strlen(key)));
+		write(, *p_env, _strlen(*p_env));
+		write(1, "\n", 1);
+		p_env++;
 	}
-	return (NULL);
 }
 
 /**
-* append_path - appends the file from stdin to the
-* tokenized path.
-* @dir: pointer to a single directory from the user PATH
-* @file: pointer to the file from stdin
-* Return: the appended path (directory + file)
+* _getenv - searches the environment for a string
+* @key: keyword to look for
+* Return: pointer to value of keyword variable
 */
 
-char *append_path(const char *dir, const char *file)
+char *_getenv(char *key)
 {
-	char *path;
-	size_t path_len;
-	size_t dir_len = _strlen(dir);
-	size_t file_len = _strlen(file);
+	char *token;
+	int i;
 
-	path_len = dir_len + 1 + file_len;
-	path = malloc(path_len + 1);
-
-	_strcpy(path, dir, dir_len);
-	path[dir_len] = '/';
-	_strcpy(path + dir_len + 1, file, file_len);
-	path[path_len] = 0;
-
-	return (path);
-}
-
-/**
-* find_cmd - looks for PATH tokenizes the directories in the path
-* appends the fileinput to each tokenized directory.
-* @cmd: pointer to the user inputted command
-* @env: pointer to the user environment
-* Return: appended path if file is executable and exists, NULL if not.
-*/
-
-char *find_cmd(char *cmd, char **env)
-{
-	char *env_path = NULL;
-	char **dir = NULL;
-	size_t index;
-	char *path = NULL;
-
-	env_path = _getenv(env, "PATH=");
-	if (!env_path)
-		return (NULL);
-
-	dir = tokenizer(env_path, ":");
-
-	for (index = 0; dir && dir[index]; index++)
+	i = 0;
+	while (environ[i])
 	{
-		char *cmd_path;
-
-		cmd_path = append_path(dir[index], cmd);
-		if (access(cmd_path, X_OK) == 0)
+		if (_strcmp(key, environ[i]) == 0)
 		{
-			path = cmd_path;
+			token = _sublook(environ[i], key);
+			if (token[0] == '=')
+			{
+				token = _char_locate(environ[i], '=');
+				return (token);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
+/**
+ * path - Find the path to a command.
+ * @av: command to look for a path.
+ * Return: A pointer created with malloc.
+ */
+
+void path(char **av)
+{
+	struct stat st;
+	char *slash = "/";
+	char *env_path, *cmd, *token, *path;
+
+	env_path = _getenv("PATH");
+	cmd = strcat(slash, av[0]);
+	token = strtok(env_path, ":");
+	while (token)
+	{
+		path = strcat(token, cmd);
+		if (access(path, X_OK) == 0)
+		{
+			av[0] = path;
 			break;
 		}
-		free(cmd_path);
+		token = strtok(NULL, ":");
 	}
-	free(dir);
-	free(env_path);
-
-	(void)cmd;
-	return (path);
+	free(cmd);
 }
 

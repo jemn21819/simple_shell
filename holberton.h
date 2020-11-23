@@ -13,27 +13,19 @@
 #include <signal.h>
 
 /* string helper functions */
-int _strlen(const char *s);
+int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strcat(char *dest, char *src);
 char *_sublook(char *src, char *substr);
 char *_chr_locate(char *str, char c);
 
-/* tokenizer functions */
-char get_delim(const char c, const char *delim);
-size_t tok_counter(const char *line, const char *delim);
-void tok_string(char **arstr, char *line, const char *delim);
-char **tokenizer(char *line, const char *delim);
 
-/* exe */
+/* env and path */
 
-int exe_cmd(char **av, char **env);
-int run_cmd(const char *path, char **av, char **env);
+void print_env(void);
+char *_getenv(char *key);
+void path(char **av);
 
-/* path */
-char *find_cmd(char *cmd, char **env);
-char *append_path(const char *dir, const char *file);
-char *_getenv(char **env, char *key);
 
 /* handler for ctrl+c signal */
 void handler(int signal);
