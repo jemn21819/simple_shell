@@ -12,9 +12,6 @@
 #include <errno.h>
 #include <signal.h>
 
-/* print string version */
-int _printstr(char *str);
-
 /* string helper functions */
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
