@@ -17,10 +17,10 @@ int _printstr(char *str);
 
 /* string helper functions */
 int _strlen(const char *s);
-void _strcpy(char *dest, const char *src, size_t n);
-char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
-int _str_n_cmp(char *s1, const char *s2, int n);
+char *_strcat(char *dest, char *src);
+char *_sublook(char *src, char *substr);
+char *_chr_locate(char *str, char c);
 
 /* tokenizer functions */
 char get_delim(const char c, const char *delim);
