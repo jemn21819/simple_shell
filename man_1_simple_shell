@@ -1,4 +1,4 @@
-.TH man 1 "November 19, 2020" "1.0" "HSH"
+.TH man 1 "November 19, 2020" "0.4.2" "HSH"
 .SH NAME
 .B hsh
 - a simple UNIX command interpreter.
