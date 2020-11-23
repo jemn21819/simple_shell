@@ -1,31 +1,29 @@
 #ifndef HOLBERTON_H
 #define HOLBERTON_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/wait.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
 #include <string.h>
-#include <errno.h>
 #include <signal.h>
+
+extern char **environ;
 
 /* string helper functions */
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
-char *_strcat(char *dest, char *src);
-char *_sublook(char *src, char *substr);
-char *_chr_locate(char *str, char c);
-
+char *_strchr(char *s, char c);
+char *_strstr(char *src, char *sub);
+char *str_concat(char *s1, char *s2);
 
 /* env and path */
 
-void print_env(void);
-char *_getenv(char *key);
-void path(char **av);
-
+char *_getenv(char *var);
+void path(char **argv);
+void _env(void);
 
 /* handler for ctrl+c signal */
 void handler(int signal);

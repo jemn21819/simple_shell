@@ -7,33 +7,36 @@
 
 int main(void)
 {
-	char *prompt = "$ ", *line = NULL, *tk = NULL, *av[256];
+	char *prompt = "$ ", *buffer = NULL, *tk = NULL, *av[256];
 	size_t bufsize = 1024;
-	pid_t pid;
+	pid_t child;
 	int i = 0, j;
 
 	do {
 		if (isatty(STDIN_FILENO) == 1)
-			write(STDOUT_FILENO, prompt, 2);
+			write(1, prompt, 2);
 		signal(SIGINT, handler);
-		i = getline(&line, &bufsize, stdin);
-		if (i == EOF)
+		i = getline(&buffer, &bufsize, stdin);
+		if (i == -EOF)
 		{
-			(isatty(STDIN_FILENO) == 1)
-				write(STDOUT_FILENO, "\n", 1);
-			return ((free(line), 0);
+			(isatty(STDIN_FILENO) == 1) ? write(1, "\n", 1) : 1;
+			free(buffer);
+			return (0);
 		}
-		if (_strcmp(line, "exit\n") == 0)
-			return ((free(line), 0);
-		
-		pid = fork();
-		if (pid == -1)
-			return (1);
-		if (pid == 0)
+		if (_strcmp(buffer, "exit\n") == 0)
 		{
-			for (j = 0, tk = strtok(line, " \n"); tk; tk = strtok(NULL, " \n"), j++)
+			free(buffer);
+			return (0);
+		}
+
+		child = fork();
+		if (child == -1)
+			return (1);
+		if (child == 0)
+		{
+			for (j = 0, tk = strtok(buffer, " \n"); tk; tk = strtok(NULL, " \n"), j++)
 				av[j] = tk;
-			av[j] = '\0';
+			av[j] = NULL;
 			if (av[0][0] != '.')
 				path(&av[0]);
 			if (execve(av[0], av, NULL) == -1)

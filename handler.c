@@ -6,9 +6,7 @@
  * Return: nothing.
  */
 
-void handler(int signal)
+void handler(__attribute__((unused))int signal)
 {
-	(void)signal;
-
-	write(STDOUT_FILENO, "\n$ ", 3);
+	write(1, "\n$ ", 3);
 }

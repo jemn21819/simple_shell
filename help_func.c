@@ -6,13 +6,14 @@
  */
 int _strlen(char *s)
 {
-	int len = 0;
+	int i;
 
-	while (s[len] != '\0')
+	i = 0;
+	while (s[i])
 	{
-		len++;
+		i++;
 	}
-	return (len);
+	return (i);
 }
 /**
  * _strcmp - compares two strings.
@@ -22,61 +23,68 @@ int _strlen(char *s)
  */
 int _strcmp(char *s1, char *s2)
 {
-	int len = 0;
+	int i;
 
-	while (s1[len])
+	i = 0;
+	while (s1[i])
 	{
-		if ((s1[len] > s2[len]) || (s1[len] < s2[len]))
+		if ((s1[i] > s2[i]) || (s1[i] < s2[i]))
 		{
-			return (s1[len] - s2[len]);
+			return (s1[i] - s2[i]);
 		}
-		len++;
+		i++;
 	}
 	return (0);
 }
 /**
- * _chr_locate - locates a character in a string.
- * @str: pointer to a string.
+ * _strchr - locates a character in a string.
+ * @s: pointer to a string.
  * @c: character to be located.
  * Return: s + x.
  */
-char *_chr_locate(char *str, char c)
-{
-	int x = 0;
 
-	while (str[x] != c && str[x] != '\0')
+char *_strchr(char *s, char c)
+{
+	int x;
+
+	x = 0;
+	while (s[x] != c && s[x] != '\0')
 	{
 		x++;
 	}
-	if (str[x] == '\0' && str[x] != c)
+	if (s[x] == '\0' && s[x] != c)
 	{
 		return (0);
 	}
-	return (str + x + 1);
+	return (s + x + 1);
 }
+
+
 /**
- * _sublook - Function that looks for a substring.
+ * _strstr - Function that looks for a substring.
  * @src: pointer to source string
- * @substr: pointer to substring to look
+ * @sub: pointer to substring to look
  * Return: src or 0
  */
-char *_sublook(char *src, char *substr)
+
+char *_strstr(char *src, char *sub)
 {
-	int x = 0;
+	int x;
 	int y;
 
+	x = 0;
 	while (src[x])
 	{
 		y = 0;
-		while (substr[y])
+		while (sub[y])
 		{
-			if (src[x + y] != substr[y])
+			if (src[x + y] != sub[y])
 			{
 				break;
 			}
 			y++;
 		}
-		if (!substr[y])
+		if (!sub[y])
 		{
 			return (src + x + y);
 		}
@@ -84,46 +92,48 @@ char *_sublook(char *src, char *substr)
 	}
 	return (0);
 }
+
+
+
 /**
- * _strcat - concatenates two strings.
- * @dest: string
- * @src: string
+ * str_concat - concatenates two strings.
+ * @s1: string
+ * @s2: string
  * Return: the whole concatenated string.
  */
-char *_strcat(char *dest, char *src)
+char *str_concat(char *s1, char *s2)
 {
 	char *array;
-	int i, size1, size2;
+	int size1 = 0, size2 = 0, i = 0;
 
-	if (!dest)
+	if (!s1)
 		size1 = 0;
 	else
 	{
-		for (size1 = 0; dest[size1]; size1++)
+		for (size1 = 0; s1[size1]; size1++)
 		{}
 	}
-	if (!src)
+	if (!s2)
 		size2 = 0;
 	else
 	{
-		for (size2 = 0; src[size2]; size2++)
+		for (size2 = 0; s2[size2]; size2++)
 		{}
 	}
 	array = malloc((size1 + size2 + 1) *  sizeof(char));
 	if (!array)
 		return (0);
-
 	for (i = 0; i < (size1 + size2); i++)
 	{
 		if (i < size1)
 		{
-			array[i] = *dest;
-			dest++;
+			array[i] = *s1;
+			s1++;
 		}
 		else if (i < (size1 + size2))
 		{
-			array[i] = *src;
-			src++;
+			array[i] = *s2;
+			s2++;
 		}
 	}
 	array[i] = '\0';
