@@ -81,6 +81,8 @@ char *find_cmd(char *cmd, char **env)
 	}
 	free(dir);
 	free(env_path);
+
+	(void)cmd;
 	return (path);
 }
 
