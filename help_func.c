@@ -15,43 +15,6 @@ int _strlen(const char *s)
 	return (len);
 }
 /**
- * _strcpy - copies the string pointed to by src, including the terminating
- *           null byte to the buffer pointed to by dest.
- * @dest: destination to copy src.
- * @src: pointer to the src string.
- * @n: size of string to copy.
- * Return: nothing.
- */
-void _strcpy(char *dest, const char *src, size_t n)
-{
-	size_t i = 0;
-
-	while (i < n && dest && src)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-}
-/**
- * _strdup - duplicates a string.
- * @str: string to be duplicated.
- * Return: the newly duplicated string.
- */
-char *_strdup(char *str)
-{
-	char *new;
-	int len = 0;
-
-	len = _strlen(str);
-	new = malloc(len + 1);
-	if (new == NULL)
-		return (NULL);
-
-	_strcpy(new, str, len);
-
-	return (new);
-}
-/**
  * _strcmp - compares two strings.
  * @s1: pointer to the first string.
  * @s2: pointer to the second string.
@@ -59,31 +22,110 @@ char *_strdup(char *str)
  */
 int _strcmp(char *s1, char *s2)
 {
-	int i = 0;
+	int len = 0;
 
-	while ((s1[i] == s2[i]) && (s1[i] != '\0') && (s2[i] != '\0'))
+	while (s1[len])
 	{
-		i++;
-	}
-	return (s1[i] - s2[i]);
-}
-/**
- * _str_n_cmp - compares two strings up to the byte size n
- * @s1: a pointer to the first string
- * @s2: a pointer to the second string
- * @n: the byte size of the string to compare
- * Return: the difference of s1 and s2
- */
-int _str_n_cmp(char *s1, const char *s2, int n)
-{
-	int i;
-
-	for (i = 0; i < n; ++i)
-	{
-		if (s1[i] == '\0' || s1[i] != s2[i])
+		if ((s1[len] > s2[len]) || (s1[len] < s2[len]))
 		{
-			return (s1[i] - s2[i]);
+			return (s1[len] - s2[len]);
 		}
+		len++;
 	}
 	return (0);
+}
+/**
+ * _chr_locate - locates a character in a string.
+ * @str: pointer to a string.
+ * @c: character to be located.
+ * Return: s + x.
+ */
+char *_chr_locate(char *str, char c)
+{
+	int x = 0;
+
+	while (str[x] != c && str[x] != '\0')
+	{
+		x++;
+	}
+	if (str[x] == '\0' && str[x] != c)
+	{
+		return (0);
+	}
+	return (str + x + 1);
+}
+/**
+ * _sublook - Function that looks for a substring.
+ * @src: pointer to source string
+ * @substr: pointer to substring to look
+ * Return: src or 0
+ */
+char *_sublook(char *src, char *substr)
+{
+	int x = 0;
+	int y;
+
+	while (src[x])
+	{
+		y = 0;
+		while (substr[y])
+		{
+			if (src[x + y] != substr[y])
+			{
+				break;
+			}
+			y++;
+		}
+		if (!substr[y])
+		{
+			return (src + x + y);
+		}
+		x++;
+	}
+	return (0);
+}
+/**
+ * _strcat - concatenates two strings.
+ * @dest: string
+ * @src: string
+ * Return: the whole concatenated string.
+ */
+char *_strcat(char *dest, char *src)
+{
+	char *array;
+	int i, size1, size2;
+
+	if (!dest)
+		size1 = 0;
+	else
+	{
+		for (size1 = 0; dest[size1]; size1++)
+		{}
+	}
+	if (!src)
+		size2 = 0;
+	else
+	{
+		for (size2 = 0; src[size2]; size2++)
+		{}
+	}
+	array = malloc((size1 + size2 + 1) *  sizeof(char));
+	if (!array)
+		return (0);
+
+	for (i = 0; i < (size1 + size2); i++)
+	{
+		if (i < size1)
+		{
+			array[i] = *dest;
+			dest++;
+		}
+		else if (i < (size1 + size2))
+		{
+			array[i] = *src;
+			src++;
+		}
+	}
+	array[i] = '\0';
+	return (array);
 }
