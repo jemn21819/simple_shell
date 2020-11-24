@@ -1,7 +1,7 @@
 #include "holberton.h"
 /**
  * _strlen - returns the length of a string.
- * @s: string to find the length of.
+ * @s: string
  * Return: the length of the string.
  */
 int _strlen(char *s)
@@ -17,125 +17,90 @@ int _strlen(char *s)
 }
 /**
  * _strcmp - compares two strings.
- * @s1: pointer to the first string.
- * @s2: pointer to the second string.
- * Return: difference of s1 and s2.
+ * @s1: string
+ * @s2: string
+ * Return: 1 if strings are different, 0 if not.
  */
 int _strcmp(char *s1, char *s2)
 {
-	int i;
+	int i = 0;
 
-	i = 0;
-	while (s1[i])
+	while (s1[i] == s2[i] && s1[i] != '\0')
 	{
-		if ((s1[i] > s2[i]) || (s1[i] < s2[i]))
-		{
-			return (s1[i] - s2[i]);
-		}
 		i++;
 	}
-	return (0);
-}
-/**
- * _strchr - locates a character in a string.
- * @s: pointer to a string.
- * @c: character to be located.
- * Return: s + x.
- */
 
-char *_strchr(char *s, char c)
-{
-	int x;
-
-	x = 0;
-	while (s[x] != c && s[x] != '\0')
+	if ((s1[i] > s2[i]) || (s1[i] < s2[i]))
 	{
-		x++;
+		return (1);
 	}
-	if (s[x] == '\0' && s[x] != c)
+	else
 	{
 		return (0);
 	}
-	return (s + x + 1);
 }
-
-
 /**
- * _strstr - Function that looks for a substring.
- * @src: pointer to source string
- * @sub: pointer to substring to look
- * Return: src or 0
+ * _strncmp - compares two strings up to n bytes.
+ * @s1: string.
+ * @s2: string.
+ * @n: Number of chars to compare.
+ * Return: 1 if strings are different, 0 if not.
  */
-
-char *_strstr(char *src, char *sub)
+int _strncmp(const char *s1, const char *s2, size_t n)
 {
-	int x;
-	int y;
-
-	x = 0;
-	while (src[x])
+	while (n > 0 && *s1 == *s2 && *s1 != '\0')
 	{
-		y = 0;
-		while (sub[y])
-		{
-			if (src[x + y] != sub[y])
-			{
-				break;
-			}
-			y++;
-		}
-		if (!sub[y])
-		{
-			return (src + x + y);
-		}
-		x++;
+		s1++;
+		s2++;
+		n--;
 	}
-	return (0);
+	if (n == 0 || *s1 == *s2)
+	{
+		return (0);
+	}
+	return (1);
 }
-
-
-
 /**
- * str_concat - concatenates two strings.
+ * _strdup - duplicates a string.
  * @s1: string
- * @s2: string
- * Return: the whole concatenated string.
+ * Return: the newly duplicated string.
  */
-char *str_concat(char *s1, char *s2)
+char *_strdup(char *s1)
 {
-	char *array;
-	int size1 = 0, size2 = 0, i = 0;
+	int len, i = 0;
+	char *s2;
 
-	if (!s1)
-		size1 = 0;
-	else
+	len = _strlen(s1);
+	s2 = malloc(sizeof(char) * (len + 1));
+	if (!S2)
 	{
-		for (size1 = 0; s1[size1]; size1++)
-		{}
+		_printf("Error: strdup->malloc\n");
+		return (NULL);
 	}
-	if (!s2)
-		size2 = 0;
-	else
+
+	while (i <= len)
 	{
-		for (size2 = 0; s2[size2]; size2++)
-		{}
+		s2[i] = s1[i];
+		i++;
 	}
-	array = malloc((size1 + size2 + 1) *  sizeof(char));
-	if (!array)
-		return (0);
-	for (i = 0; i < (size1 + size2); i++)
+	return (s2);
+}
+/**
+ * _strcat - concatenates two strings.
+ * @dest: destination string.
+ * @src: source string.
+ * Return: the concatenated string.
+ */
+char *_strcat(char *dest, char *src)
+{
+	int i = 0, len;
+
+	len = _strlen(dest);
+	while (src[i])
 	{
-		if (i < size1)
-		{
-			array[i] = *s1;
-			s1++;
-		}
-		else if (i < (size1 + size2))
-		{
-			array[i] = *s2;
-			s2++;
-		}
+		dest[len + i] = src[i];
+		i++;
 	}
-	array[i] = '\0';
-	return (array);
+	dest[len + i] = '\0';
+	return (dest);
 }
