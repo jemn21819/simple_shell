@@ -1,50 +1,44 @@
 #include "holberton.h"
 
+
 /**
- * main - Display prompt and get a line and initialice process
- * Return: Always 0.
+ * prompt - Prints a shell prompt to stdout.
  */
 
-int main(void)
+void prompt(void)
 {
-	char *prompt = "$ ", *buffer = NULL, *tk = NULL, *av[256];
-	size_t bufsize = 1024;
-	pid_t child;
-	int i = 0, j;
+	_printf("$ ");
+}
 
-	do {
-		if (isatty(STDIN_FILENO) == 1)
-			write(1, prompt, 2);
-		signal(SIGINT, handler);
-		i = getline(&buffer, &bufsize, stdin);
-		if (i == -EOF)
-		{
-			(isatty(STDIN_FILENO) == 1) ? write(1, "\n", 1) : 1;
-			free(buffer);
-			return (0);
-		}
-		if (_strcmp(buffer, "exit\n") == 0)
-		{
-			free(buffer);
-			return (0);
-		}
 
-		child = fork();
-		if (child == -1)
-			return (1);
-		if (child == 0)
-		{
-			for (j = 0, tk = strtok(buffer, " \n"); tk; tk = strtok(NULL, " \n"), j++)
-				av[j] = tk;
-			av[j] = NULL;
-			if (av[0][0] != '.')
-				path(&av[0]);
-			if (execve(av[0], av, NULL) == -1)
-				perror("Error:");
-			exit(0);
-		}
-		else
-			wait(NULL);
-	} while (1);
-	return (0);
+/**
+ * main - main function.
+ * @ac: Argument count.
+ * @av: Argument vector.
+ * @env: Environment variables.
+ * Return: status
+ */
+
+int main(int ac, char **av, char **env)
+{
+	char *line;
+	char **tokens;
+	int status;
+	(void)ac;
+	(void)av;
+
+	status = 1;
+	tokens = NULL;
+	line = NULL;
+
+	signal(SIGINT, handler);
+	while (status == 1)
+	{
+		prompt();
+		line = _getline();
+		tokens = _strtok(line);
+		status = exec_bltin(tokens, env, status, line);
+	}
+	free(tokens);
+	return (status);
 }

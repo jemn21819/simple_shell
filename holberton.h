@@ -20,21 +20,21 @@ char *_strcat(char *s1, char *s2);
 int _intlen(int n);
 int _atoi(char *str);
 char *_strdup(char *s1);
-char *itoa(int n);
+char *_itoa(int n);
 void _printf(char *str);
 int _putchar(char c);
 
-void mem_set(void *mem, int byte, size_t n);
+void set_mem(void *mem, int byte, size_t n);
 char *get_env_var_val(char *env_var);
 char *get_full_comd_path(char **tokens, char *env_var_val);
 void free_str_array(char **array);
-char **parse_path(char *line, char);
-int count_chars(char *s1, char seperator);
-int count_words(char *s, char seperator);
+char **parse_path(char *line, char deim);
+int count_chars(char *str, char delim);
+int count_words(char *str, char delim);
 
 int count_chars(char *line, char space);
 int count_tokens(char *line);
-int exec_bltins_prgrms(char **tokens, char **env, int status, char *line);
+int exec_bltin(char **tokens, char **env, int status, char *line);
 int exit_shell(char **tokens, char *line);
 int _env(char **env);
 int exec_prgrms(char **tokens, char *line);

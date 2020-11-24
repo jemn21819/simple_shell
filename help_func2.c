@@ -56,7 +56,7 @@ char *_itoa(int n)
 	}
 
 	str[len + negative] = '\0';
-	for (i <= len)
+	while (i <= len)
 	{
 		str[len + negative - i] = '0' + (n % 10 * -1);
 		n = n / 10;

@@ -10,3 +10,4 @@ void handler(__attribute__((unused))int signal)
 {
 	write(1, "\n$ ", 3);
 }
+

@@ -72,7 +72,7 @@ char *_strdup(char *s1)
 
 	len = _strlen(s1);
 	s2 = malloc(sizeof(char) * (len + 1));
-	if (!S2)
+	if (!s2)
 	{
 		_printf("Error: strdup->malloc\n");
 		return (NULL);
