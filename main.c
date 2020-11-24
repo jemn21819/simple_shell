@@ -44,7 +44,7 @@ int main(int argc, char **argv, char **env)
 		if (pid == 0)
 		{
 			if (args == NULL)
-				command_is_null(line);
+				cmd_null(line);
 			else if (_strcmp(exit_cmd, args[0]))
 				exit_out(line, args);
 			else if (_strcmp(env_cmd, args[0]))
@@ -58,11 +58,11 @@ int main(int argc, char **argv, char **env)
 		{
 			wait(&status);
 			if (args == NULL)
-				parent_free_buff_commands(line, args);
+				parent_free(line, args);
 			else if (_strcmp(exit_cmd, args[0]))
 				exit_out(line, args);
 			else
-				parent_free_buff_commands(line, args);
+				parent_free(line, args);
 		}
 		size = 0; line = NULL;
 		if (isatty(STDIN_FILENO))

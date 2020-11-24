@@ -82,7 +82,7 @@ char **store_env_variables(char *fir_com, char **environ)
 		all_directories[i] = malloc(sizeof(char) * (dir_length + com_length + 2));
 		if (all_directories[i] == NULL)
 		{
-			free_all_double_ptr(all_directories);
+			free_dptr(all_directories);
 			return (NULL);
 		}
 		_strncpycmd(all_directories[i], directory, fir_com, dir_length, com_length);

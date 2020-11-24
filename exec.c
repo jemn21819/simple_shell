@@ -1,12 +1,12 @@
 #include "holberton.h"
 /**
- * command_is_null - frees the buffer we create when the double ptr command
+ * cmd_null - frees the buffer we create when the double ptr command
  * returned null
- * @buffer: the buffer we created from getline
+ * @line: the buffer we created from getline
  *
  * Return: void
  */
-void command_is_null(char *buffer)
+void cmd_null(char *buffer)
 {
 	free(buffer);
 	exit(EXIT_SUCCESS);
@@ -15,15 +15,13 @@ void command_is_null(char *buffer)
  * exit_out - frees the buffer and commands we created from the
  * getline function, then exits child process
  * @buffer: buffer we created from getline
- * @commands: double pointer array we created to store all commands
+ * @cmd: double pointer array we created to store all commands
  * from the prompt
- *
- * Return: void
  */
-void exit_out(char *buffer, char **commands)
+void exit_out(char *buffer, char **cmd)
 {
 	free(buffer);
-	free_all_double_ptr(commands);
+	free_dptr(cmd);
 	exit(EXIT_SUCCESS);
 }
 
@@ -31,16 +29,16 @@ void exit_out(char *buffer, char **commands)
  * env_out - frees the buffer and commands we created from the
  * getline function, prints the env, then exits child process
  * @buffer: buffer we created from getline
- * @commands: double pointer array we created to store all commands
+ * @cmd: double pointer array we created to store all commands
  * from the prompt
  * @env: environment variables from your login
  *
  * Return: void
  */
-void env_out(char *buffer, char **commands, char **env)
+void env_out(char *buffer, char **cmd, char **env)
 {
 	free(buffer);
-	free_all_double_ptr(commands);
+	free_dptr(cmd);
 	print_env(env);
 	exit(EXIT_SUCCESS);
 }
@@ -48,15 +46,15 @@ void env_out(char *buffer, char **commands, char **env)
  * parent_free_buff_commands - frees buffer and commands you created
  * with the getline function from the prompt
  * @buffer: buffer we created from getline
- * @commands: double pointer array we created to store all commands
+ * @cmd: double pointer array we created to store all commands
  * from the prompt
  *
  * Return: void
  */
-void parent_free_buff_commands(char *buffer, char **commands)
+void parent_free(char *buffer, char **cmd)
 {
 	free(buffer);
-	free_all_double_ptr(commands);
+	free_dptr(cmd);
 }
 
 /**
@@ -66,7 +64,7 @@ void parent_free_buff_commands(char *buffer, char **commands)
  * If not found, prints out an error message, then frees buffer and
  * commands you created with the getline function from the prompt
  * @buffer: buffer we created from getline
- * @commands: double pointer array we created to store all commands
+ * @cmd: double pointer array we created to store all commands
  * from the prompt
  * @env: environment variables from your login
  * @argv: argument vector from int main
@@ -74,26 +72,26 @@ void parent_free_buff_commands(char *buffer, char **commands)
  *
  * Return: void
  */
-void c_path(char **commands, char *buffer, char **env, char **argv, int count)
+void c_path(char **cmd, char *buffer, char **env, char **argv, int count)
 {
-	struct stat fileStat2;
+	struct stat fStat2;
 	int i;
-	char **all_directories;
+	char **dir;
 
 	i = 0;
-	all_directories = store_env_variables(commands[0], env);
-	while (all_directories[i])
+	dir = store_env_variables(cmd[0], env);
+	while (dir[i])
 	{
-		if (stat(all_directories[i], &fileStat2) == 0)
-			execve(all_directories[i], commands, NULL);
+		if (stat(dir[i], &fStat2) == 0)
+			execve(dir[i], cmd, NULL);
 		++i;
 	}
 
 	/* if no command found, print error message */
-	build_error_message(argv, commands[0], count);
+	build_error_message(argv, cmd[0], count);
 
 	free(buffer);
-	free_all_double_ptr(commands);
-	free_all_double_ptr(all_directories);
+	free_dptr(cmd);
+	free_dptr(dir);
 	exit(EXIT_SUCCESS);
 }

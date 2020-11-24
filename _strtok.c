@@ -59,7 +59,7 @@ char **array_from_strtok(char *str)
 		token_holder[i] = malloc(_strlen(token) + 1);
 		if (token_holder[i] == NULL)
 		{
-			free_all_double_ptr(token_holder);
+			free_dptr(token_holder);
 			return (NULL);
 		}
 		_strncpy(token_holder[i], token, _strlen(token) + 1);

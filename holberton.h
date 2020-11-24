@@ -10,7 +10,7 @@
 #include <signal.h>
 
 /* prompt.c */
-void INThandler(int sig);
+void handler(int sig);
 
 /* strtok_example.c */
 unsigned int find_command_length(char *s);
@@ -31,7 +31,7 @@ char *_strncpycmd(char *dest, char *src, char *command, int n, int c);
 void print_env(char **environ);
 
 /*free_it_all.c */
-void free_all_double_ptr(char **d_ptr);
+void free_dptr(char **d_ptr);
 
 /*error_message.c*/
 void build_error_message(char **av, char *fir_com, int count);
@@ -40,9 +40,9 @@ void end_of_file(char *buffer);
 void fork_fail(void);
 
 /*child_processes.c */
-void command_is_null(char *buffer);
-void exit_out(char *buffer, char **commands);
-void env_out(char *buffer, char **commands, char **env);
-void parent_free_buff_commands(char *buffer, char **commands);
-void c_path(char **commands, char *buffer, char **env, char **argv, int count);
-#endif /* _HOLBERTON_H_ */
+void cmd_null(char *buffer);
+void exit_out(char *buffer, char **cmd);
+void env_out(char *buffer, char **cmd, char **env);
+void parent_free(char *buffer, char **cmd);
+void c_path(char **cmd, char *buffer, char **env, char **argv, int count);
+#endif
