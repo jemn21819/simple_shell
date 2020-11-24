@@ -27,7 +27,7 @@ unsigned int cmd_len(char *s)
 	return (cmd);
 }
 /**
- * arr_trtok - creates a double pointer array that holders pointers
+ * arr_strtok - creates a double pointer array that holders pointers
  * to each string from the command line
  * @str: commands from the terminla
  * Return: double pointer array of pointers commands interpret and execute
