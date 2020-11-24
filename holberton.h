@@ -1,49 +1,48 @@
-#ifndef HOLBERTON_H
-#define HOLBERTON_H
-
+#ifndef _HOLBERTON_H_
+#define _HOLBERTON_H_
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <string.h>
 #include <signal.h>
 
-extern char **environ;
+/* prompt.c */
+void INThandler(int sig);
 
-/* helping functions */
-int _strlen(char *s);
+/* strtok_example.c */
+unsigned int find_command_length(char *s);
+char **array_from_strtok(char *str);
+
+/* helperfunctions.c */
+char *_strncpy(char *dest, char *src, int n);
+char *_strncpyconst(char *dest, const char *src, int n);
+unsigned int _strlen_const(const char *name);
 int _strcmp(char *s1, char *s2);
-int _strncmp(const char *s1, const char *s2, size_t n);
-char *_strcat(char *s1, char *s2);
-int _intlen(int n);
-int _atoi(char *str);
-char *_strdup(char *s1);
-char *_itoa(int n);
-void _printf(char *str);
-int _putchar(char c);
+unsigned int _strlen(char *s);
 
-void set_mem(void *mem, int byte, size_t n);
-char *get_env_var_val(char *env_var);
-char *get_full_comd_path(char **tokens, char *env_var_val);
-void free_str_array(char **array);
-char **parse_path(char *line, char deim);
-int count_chars(char *str, char delim);
-int count_words(char *str, char delim);
+/* environment.c */
+unsigned int find_semis(char *path);
+char **store_env_variables(char *fir_com, char **environ);
+char *_getenv(const char *name, char **environ);
+char *_strncpycmd(char *dest, char *src, char *command, int n, int c);
+void print_env(char **environ);
 
-int count_chars(char *line, char space);
-int count_tokens(char *line);
-int exec_bltin(char **tokens, char **env, int status, char *line);
-int exit_shell(char **tokens, char *line);
-int _env(char **env);
-int exec_prgrms(char **tokens, char *line);
-char **_strtok(char *line);
-void prompt(void);
-char *_getline(void);
+/*free_it_all.c */
+void free_all_double_ptr(char **d_ptr);
 
+/*error_message.c*/
+void build_error_message(char **av, char *fir_com, int count);
+int _puterror(char c);
+void end_of_file(char *buffer);
+void fork_fail(void);
 
-/* handler for ctrl+c signal */
-void handler(int signal);
-
-#endif
+/*child_processes.c */
+void command_is_null(char *buffer);
+void exit_out(char *buffer, char **commands);
+void env_out(char *buffer, char **commands, char **env);
+void parent_free_buff_commands(char *buffer, char **commands);
+void c_path(char **commands, char *buffer, char **env, char **argv, int count);
+#endif /* _HOLBERTON_H_ */
