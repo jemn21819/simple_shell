@@ -1,106 +1,90 @@
 #include "holberton.h"
 /**
- * _strlen - returns the length of a string.
- * @s: string
- * Return: the length of the string.
- */
-int _strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
-}
-/**
- * _strcmp - compares two strings.
- * @s1: string
- * @s2: string
- * Return: 1 if strings are different, 0 if not.
+ * _strcmp - compares two strings for equality
+ * @s1: string 1
+ * @s2: string 2
+ *
+ * Return: 1 if equal, 0 if not equal
  */
 int _strcmp(char *s1, char *s2)
 {
-	int i = 0;
+	unsigned int i = 0;
 
-	while (s1[i] == s2[i] && s1[i] != '\0')
+	while (s1[i])
 	{
-		i++;
+		if (s1[i] != s2[i])
+			return (0);
+		++i;
 	}
 
-	if ((s1[i] > s2[i]) || (s1[i] < s2[i]))
-	{
-		return (1);
-	}
-	else
-	{
-		return (0);
-	}
-}
-/**
- * _strncmp - compares two strings up to n bytes.
- * @s1: string.
- * @s2: string.
- * @n: Number of chars to compare.
- * Return: 1 if strings are different, 0 if not.
- */
-int _strncmp(const char *s1, const char *s2, size_t n)
-{
-	while (n > 0 && *s1 == *s2 && *s1 != '\0')
-	{
-		s1++;
-		s2++;
-		n--;
-	}
-	if (n == 0 || *s1 == *s2)
-	{
-		return (0);
-	}
 	return (1);
 }
 /**
- * _strdup - duplicates a string.
- * @s1: string
- * Return: the newly duplicated string.
+ * _strlen_const - finds the length of a constant string
+ * @name: string to find length of
+ *
+ * Return: length of the constant string
  */
-char *_strdup(char *s1)
+unsigned int _strlen_const(const char *name)
 {
-	int len, i = 0;
-	char *s2;
+	unsigned int i = 0;
 
-	len = _strlen(s1);
-	s2 = malloc(sizeof(char) * (len + 1));
-	if (!s2)
-	{
-		_printf("Error: strdup->malloc\n");
-		return (NULL);
-	}
-
-	while (i <= len)
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	return (s2);
+	while (name[i])
+		++i;
+	return (i);
 }
 /**
- * _strcat - concatenates two strings.
- * @dest: destination string.
- * @src: source string.
- * Return: the concatenated string.
+ * _strlen - finds the length of a string
+ * @s: string to find the length of
+ *
+ * Return: unsigned int length of the string
  */
-char *_strcat(char *dest, char *src)
+unsigned int _strlen(char *s)
 {
-	int i = 0, len;
+	unsigned int counter = 0;
 
-	len = _strlen(dest);
-	while (src[i])
-	{
-		dest[len + i] = src[i];
-		i++;
-	}
-	dest[len + i] = '\0';
+	while (s[counter] != '\0')
+		++counter;
+
+	return (counter);
+}
+/**
+ * _strncpy - copies ones string to another string in memory
+ * @dest: destination string to copy from
+ * @src: string to copy to
+ * @n: the length to copy
+ *
+ * Return: the dest memory address
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n && src[i] != '\0'; i++)
+		dest[i] = src[i];
+
+	for ( ; i < n; i++)
+		dest[i] = '\0';
+
+	return (dest);
+}
+/**
+ * _strncpyconst - copies one constant string to another string
+ * @dest: destination string to copy from
+ * @src: string to copy to
+ * @n: the length to copy
+ *
+ * Return: the dest memory address
+ */
+char *_strncpyconst(char *dest, const char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n && src[i] != '\0'; i++)
+		dest[i] = src[i];
+
+	for ( ; i < n; i++)
+		dest[i] = '\0';
+
 	return (dest);
 }

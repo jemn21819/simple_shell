@@ -1,19 +1,27 @@
 #include "holberton.h"
 
 /**
- * free_str_array - Frees a string array.
- * @array: array to set free.
+ * free_all_double_ptr - frees all the memory associated with a double pointer
+ * @d_ptr: the double pointer to free
+ *
+ * Return: void
  */
 
-void free_str_array(char **array)
+void free_all_double_ptr(char **d_ptr)
 {
-	int i;
+	unsigned int i = 0;
 
-	i = 0;
-	while (array[i])
+	if (d_ptr == NULL)
+		return;
+
+	while (d_ptr[i])
 	{
-		free(array[i]);
-		i++;
+		free(d_ptr[i]);
+		++i;
 	}
-	free(array);
+
+	if (d_ptr[i] == NULL)
+		free(d_ptr[i]);
+
+	free(d_ptr);
 }

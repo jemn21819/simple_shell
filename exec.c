@@ -1,101 +1,99 @@
 #include "holberton.h"
-
 /**
- * exec_bltin - Executes builtins and calls programs.
- * @tokens: received from stdin.
- * @env: environment variable array.
- * @status: return value
- * @line: command input.
- * Return: status (int).
+ * command_is_null - frees the buffer we create when the double ptr command
+ * returned null
+ * @buffer: the buffer we created from getline
+ *
+ * Return: void
  */
-
-int exec_bltin(char **tokens, char **env, int status, char *line)
+void command_is_null(char *buffer)
 {
-	char *int_to_str;
-
-	if (tokens[0] == NULL)
-	{
-		free(tokens);
-		free(line);
-		return (1);
-	}
-	else if (_strcmp(tokens[0], "exit") == 0)
-		exit_shell(tokens, line);
-	else if (_strcmp(tokens[0], "env") == 0)
-	{
-		free(tokens);
-		free(line);
-		return (_env(env));
-	}
-	else if (_strcmp(tokens[0], "$?") == 0)
-	{
-		free(tokens);
-		free(line);
-		int_to_str = _itoa(status);
-		_printf(int_to_str);
-		_printf("\n");
-		free(int_to_str);
-	}
-	else if (_strcmp(tokens[0], "$$") == 0)
-	{
-		free(tokens);
-		free(line);
-		int_to_str = _itoa(getpid());
-		_printf(int_to_str);
-		_printf("\n");
-		free(int_to_str);
-	}
-	else
-		exec_prgrms(tokens, line);
-	return (1);
+	free(buffer);
+	exit(EXIT_SUCCESS);
+}
+/**
+ * exit_out - frees the buffer and commands we created from the
+ * getline function, then exits child process
+ * @buffer: buffer we created from getline
+ * @commands: double pointer array we created to store all commands
+ * from the prompt
+ *
+ * Return: void
+ */
+void exit_out(char *buffer, char **commands)
+{
+	free(buffer);
+	free_all_double_ptr(commands);
+	exit(EXIT_SUCCESS);
 }
 
+/**
+ * env_out - frees the buffer and commands we created from the
+ * getline function, prints the env, then exits child process
+ * @buffer: buffer we created from getline
+ * @commands: double pointer array we created to store all commands
+ * from the prompt
+ * @env: environment variables from your login
+ *
+ * Return: void
+ */
+void env_out(char *buffer, char **commands, char **env)
+{
+	free(buffer);
+	free_all_double_ptr(commands);
+	print_env(env);
+	exit(EXIT_SUCCESS);
+}
+/**
+ * parent_free_buff_commands - frees buffer and commands you created
+ * with the getline function from the prompt
+ * @buffer: buffer we created from getline
+ * @commands: double pointer array we created to store all commands
+ * from the prompt
+ *
+ * Return: void
+ */
+void parent_free_buff_commands(char *buffer, char **commands)
+{
+	free(buffer);
+	free_all_double_ptr(commands);
+}
 
 /**
- * exec_prgrms - Executes shell programs with fork process.
- * @tokens: Commands from stdin.
- * @line: Commands from stdin.
- * Return: status (int).
+ * c_path - creates a double ptr array of all your directories
+ * from your $PATH variable, checks if the first command you
+ * entered is a executable in all your directories, then executes.
+ * If not found, prints out an error message, then frees buffer and
+ * commands you created with the getline function from the prompt
+ * @buffer: buffer we created from getline
+ * @commands: double pointer array we created to store all commands
+ * from the prompt
+ * @env: environment variables from your login
+ * @argv: argument vector from int main
+ * @count: number of times you've entered commands to the prompt
+ *
+ * Return: void
  */
-
-int exec_prgrms(char **tokens, char *line)
+void c_path(char **commands, char *buffer, char **env, char **argv, int count)
 {
-	char *env_var;
-	char *env_var_val;
-	char *full_comd_path;
-	pid_t pid;
-	int status;
+	struct stat fileStat2;
+	int i;
+	char **all_directories;
 
-	env_var = "PATH";
-	env_var_val = get_env_var_val(env_var);
-	full_comd_path = get_full_comd_path(tokens, env_var_val);
-
-	if (full_comd_path != NULL)
+	i = 0;
+	all_directories = store_env_variables(commands[0], env);
+	while (all_directories[i])
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			free(full_comd_path);
-			return (1);
-		}
-		if (pid == 0)
-		{
-			if (execve(full_comd_path, tokens, environ) == -1)
-			{
-				perror(*tokens);
-				free(tokens);
-				free(env_var_val);
-				free(full_comd_path);
-				exit(EXIT_FAILURE);
-			}
-			return (EXIT_SUCCESS);
-		}
-		wait(&status);
+		if (stat(all_directories[i], &fileStat2) == 0)
+			execve(all_directories[i], commands, NULL);
+		++i;
 	}
-	free(line);
-	free(tokens);
-	free(env_var_val);
-	free(full_comd_path);
-	return (0);
+
+	/* if no command found, print error message */
+	build_error_message(argv, commands[0], count);
+
+	free(buffer);
+	free_all_double_ptr(commands);
+	free_all_double_ptr(all_directories);
+	exit(EXIT_SUCCESS);
 }
