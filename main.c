@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env)
 		if (chr == EOF)
 			end_of_file(line);
 		++count;
-		args = array_from_strtok(line);
+		args = arr_strtok(line);
 		pid = fork();
 		if (pid == -1)
 			fork_fail();

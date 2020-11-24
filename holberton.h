@@ -13,8 +13,8 @@
 void handler(int sig);
 
 /* strtok_example.c */
-unsigned int find_command_length(char *s);
-char **array_from_strtok(char *str);
+unsigned int cmd_len(char *s);
+char **arr_strtok(char *str);
 
 /* helperfunctions.c */
 char *_strncpy(char *dest, char *src, int n);

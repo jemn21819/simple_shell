@@ -1,16 +1,16 @@
 #include "holberton.h"
 /**
- * find_command_length - finds the number of commands in the string
- * @s: the string to find the commands
- *
+ * cmd_len - finds the number of commands in the string
+ * @s: string to find the commands
  * Return: number of commands, unsigned int
  */
-unsigned int find_command_length(char *s)
+
+unsigned int cmd_len(char *s)
 {
-	unsigned int commands, i, flag;
+	unsigned int cmd, i, flag;
 
 	flag = 0;
-	commands = 0;
+	cmd = 0;
 	i = 0;
 	while (s[i] != '\0')
 	{
@@ -19,53 +19,48 @@ unsigned int find_command_length(char *s)
 
 		if ((flag && s[i + 1] == ' ') || (flag && s[i + 1] == '\0'))
 		{
-			++commands;
+			++cmd;
 			flag = 0;
 		}
 		++i;
 	}
-	return (commands);
+	return (cmd);
 }
 /**
- * array_from_strtok - creates a double pointer array that holders pointers
+ * arr_trtok - creates a double pointer array that holders pointers
  * to each string from the command line
- * @str: the commands from the terminal when you type them to the standard
- * input
- *
- * Return: double pointer array of pointers that are commands to interpret
- * and execute
+ * @str: commands from the terminla
+ * Return: double pointer array of pointers commands interpret and execute
  */
-char **array_from_strtok(char *str)
+char **arr_strtok(char *str)
 {
-	char **token_holder;
+	char **args;
 	char *token;
-	unsigned int length;
+	unsigned int len;
 	int i;
 
-	/* replace '\n' added by getline with '\0'*/
 	str[_strlen(str) - 1] = '\0';
-	length = find_command_length(str);
-	if (length == 0)
+	len = cmd_len(str);
+	if (len == 0)
 		return (NULL);
 
-	/* +1 accounts for NULL token that will be added */
-	token_holder = malloc((sizeof(char *)) * (length + 1));
-	if (token_holder == NULL)
+	args = malloc((sizeof(char *)) * (len + 1));
+	if (args == NULL)
 		return (NULL);
 	i = 0;
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
-		token_holder[i] = malloc(_strlen(token) + 1);
-		if (token_holder[i] == NULL)
+		args[i] = malloc(_strlen(token) + 1);
+		if (args[i] == NULL)
 		{
-			free_dptr(token_holder);
+			free_dptr(args);
 			return (NULL);
 		}
-		_strncpy(token_holder[i], token, _strlen(token) + 1);
+		_strncpy(args[i], token, _strlen(token) + 1);
 		token = strtok(NULL, " ");
 		++i;
 	}
-	token_holder[i] = NULL;
-	return (token_holder);
+	args[i] = NULL;
+	return (args);
 }
