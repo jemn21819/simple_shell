@@ -79,7 +79,7 @@ void c_path(char **cmd, char *buffer, char **env, char **argv, int count)
 	char **dir;
 
 	i = 0;
-	dir = store_env_variables(cmd[0], env);
+	dir = env_var(cmd[0], env);
 	while (dir[i])
 	{
 		if (stat(dir[i], &fStat2) == 0)
@@ -88,7 +88,7 @@ void c_path(char **cmd, char *buffer, char **env, char **argv, int count)
 	}
 
 	/* if no command found, print error message */
-	build_error_message(argv, cmd[0], count);
+	error_msg(argv, cmd[0], count);
 
 	free(buffer);
 	free_dptr(cmd);

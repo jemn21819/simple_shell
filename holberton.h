@@ -24,17 +24,17 @@ int _strcmp(char *s1, char *s2);
 unsigned int _strlen(char *s);
 
 /* environment.c */
-unsigned int find_semis(char *path);
-char **store_env_variables(char *fir_com, char **environ);
-char *_getenv(const char *name, char **environ);
-char *_strncpycmd(char *dest, char *src, char *command, int n, int c);
+unsigned int find_dir(char *path);
+char **env_var(char *cmd, char **environ);
+char *_getenv(const char *key, char **environ);
+char *_strncpycmd(char *dest, char *src, char *cmd, int n, int c);
 void print_env(char **environ);
 
 /*free_it_all.c */
 void free_dptr(char **d_ptr);
 
 /*error_message.c*/
-void build_error_message(char **av, char *fir_com, int count);
+void error_msg(char **av, char *cmd, int count);
 int _puterror(char c);
 void end_of_file(char *buffer);
 void fork_fail(void);
