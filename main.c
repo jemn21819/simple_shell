@@ -6,7 +6,7 @@
  * @sig: signal to handle
  * Return: void
  */
-void INThandler(int sig)
+void handler(int sig)
 {
 	(void)sig;
 	write(STDOUT_FILENO, "\n$ ", 3);
@@ -21,57 +21,54 @@ void INThandler(int sig)
  */
 int main(int argc, char **argv, char **env)
 {
-	char *buffer; char **commands;
-	size_t length; ssize_t characters;
-	char *dolla_dolla = "$ ", *exit_command = "exit", *env_command = "env";
-	pid_t pid; struct stat fileStat;
+	char *line; char **args;
+	size_t size; ssize_t chr;
+	char *prompt = "$ ", *exit_cmd = "exit", *env_cmd= "env";
+	pid_t pid; struct stat fStat;
 	int status, count;
 	(void)argc;
 
-	buffer = NULL, length = 0, count = 0;
-
+	line = NULL, size = 0, count = 0;
 	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, dolla_dolla, 2);
-
-	signal(SIGINT, INThandler);
-
-	while ((characters = getline(&buffer, &length, stdin)))
+		write(STDOUT_FILENO, prompt, 2);
+	signal(SIGINT, handler);
+	while ((chr = getline(&line, &size, stdin)))
 	{
-		if (characters == EOF)
-			end_of_file(buffer);
+		if (chr == EOF)
+			end_of_file(line);
 		++count;
-		commands = array_from_strtok(buffer);
+		args = array_from_strtok(line);
 		pid = fork();
 		if (pid == -1)
 			fork_fail();
 		if (pid == 0)
 		{
-			if (commands == NULL)
-				command_is_null(buffer);
-			else if (_strcmp(exit_command, commands[0]))
-				exit_out(buffer, commands);
-			else if (_strcmp(env_command, commands[0]))
-				env_out(buffer, commands, env);
-			else if (stat(commands[0], &fileStat) == 0)
-				execve(commands[0], commands, NULL);
+			if (args == NULL)
+				command_is_null(line);
+			else if (_strcmp(exit_cmd, args[0]))
+				exit_out(line, args);
+			else if (_strcmp(env_cmd, args[0]))
+				env_out(line, args, env);
+			else if (stat(args[0], &fStat) == 0)
+				execve(args[0], args, NULL);
 			else
-				c_path(commands, buffer, env, argv, count);
+				c_path(args, line, env, argv, count);
 		}
 		else
 		{
 			wait(&status);
-			if (commands == NULL)
-				parent_free_buff_commands(buffer, commands);
-			else if (_strcmp(exit_command, commands[0]))
-				exit_out(buffer, commands);
+			if (args == NULL)
+				parent_free_buff_commands(line, args);
+			else if (_strcmp(exit_cmd, args[0]))
+				exit_out(line, args);
 			else
-				parent_free_buff_commands(buffer, commands);
+				parent_free_buff_commands(line, args);
 		}
-		length = 0; buffer = NULL;
+		size = 0; line = NULL;
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, dolla_dolla, 2);
+			write(STDOUT_FILENO, prompt, 2);
 	}
-	if (characters == -1)
+	if (chr == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
