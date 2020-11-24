@@ -1,7 +1,7 @@
 #include "holberton.h"
 
 /**
- * free_ptr - frees all the memory associated with a double pointer
+ * free_dptr - frees all the memory associated with a double pointer
  * @d_ptr: the double pointer to free
  */
 

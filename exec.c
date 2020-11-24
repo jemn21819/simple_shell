@@ -2,9 +2,7 @@
 /**
  * cmd_null - frees the buffer we create when the double ptr command
  * returned null
- * @line: the buffer we created from getline
- *
- * Return: void
+ * @buffer: the buffer we created from getline
  */
 void cmd_null(char *buffer)
 {
@@ -43,7 +41,7 @@ void env_out(char *buffer, char **cmd, char **env)
 	exit(EXIT_SUCCESS);
 }
 /**
- * parent_free_buff_commands - frees buffer and commands you created
+ * parent_free - frees buffer and commands you created
  * with the getline function from the prompt
  * @buffer: buffer we created from getline
  * @cmd: double pointer array we created to store all commands

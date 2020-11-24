@@ -2,7 +2,7 @@
 
 #include "holberton.h"
 /**
- * INThandler - handles signals and write the prompt
+ * handler - handles signals and write the prompt
  * @sig: signal to handle
  * Return: void
  */
@@ -21,9 +21,9 @@ void handler(int sig)
  */
 int main(int argc, char **argv, char **env)
 {
-	char *line; char **args;
+	char *line, **args;
 	size_t size; ssize_t chr;
-	char *prompt = "$ ", *exit_cmd = "exit", *env_cmd= "env";
+	char *prompt = "$ ", *exit_cmd = "exit", *env_cmd = "env";
 	pid_t pid; struct stat fStat;
 	int status, count;
 	(void)argc;
