@@ -9,9 +9,6 @@
 #include <sys/stat.h>
 #include <signal.h>
 
-/* prompt.c */
-void handler(int sig);
-
 /* strtok_example.c */
 unsigned int cmd_len(char *s);
 char **arr_strtok(char *str);
@@ -32,6 +29,8 @@ void print_env(char **environ);
 
 /*free_it_all.c */
 void free_dptr(char **d_ptr);
+int _atoi(char *str);
+void handler(int sig);
 
 /*error_message.c*/
 void error_msg(char **av, char *cmd, int count);

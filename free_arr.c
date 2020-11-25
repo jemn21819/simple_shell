@@ -33,3 +33,26 @@ void handler(int sig)
 	(void)sig;
 	write(STDOUT_FILENO, "\n$ ", 3);
 }
+/**
+ * _atoi - converts from character to integer.
+ * @str: string
+ * Return: converted integer.
+ */
+int _atoi(char *str)
+{
+	int res = 0, sign = 1, i = 0;
+
+	if (str[0] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+
+	while (str[i] != '\0')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+
+	return (sign * res);
+}

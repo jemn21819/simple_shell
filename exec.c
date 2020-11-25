@@ -18,9 +18,15 @@ void cmd_null(char *buffer)
  */
 void exit_out(char *buffer, char **cmd)
 {
+	int status = 0;
+
+	if (cmd[1] != NULL)
+	{
+		status = _atoi(cmd[1]);
+	}
 	free(buffer);
 	free_dptr(cmd);
-	exit(EXIT_SUCCESS);
+	exit(status);
 }
 
 /**
