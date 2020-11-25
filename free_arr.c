@@ -23,3 +23,13 @@ void free_dptr(char **d_ptr)
 
 	free(d_ptr);
 }
+/**
+* handler - handles signals and write the prompt
+* @sig: signal to handle
+* Return: nothing
+*/
+void handler(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\n$ ", 3);
+}

@@ -45,4 +45,6 @@ void exit_out(char *buffer, char **cmd);
 void env_out(char *buffer, char **cmd, char **env);
 void parent_free(char *buffer, char **cmd);
 void c_path(char **cmd, char *buffer, char **env, char **argv, int count);
+void _fork(char **args, char **argv, char **env, char *line, int count);
+
 #endif
